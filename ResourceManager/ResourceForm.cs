@@ -35,10 +35,6 @@ namespace ResourceManager
             if (DialogSelectFolder.ShowDialog() != DialogResult.Cancel)
 			{
 				TxtDataPath.Text = DialogSelectFolder.SelectedPath;
-				if (TxtJsonPath.TextLength == 0)
-				{
-					TxtJsonPath.Text = Path.Combine(DialogSelectFolder.SelectedPath, DefaultDataFile);
-                }
 			}
 		}
 
@@ -83,11 +79,19 @@ namespace ResourceManager
 			var dataItem = new DataItem();
 
 			dataItem.FileName = Path.GetFileName(path);
+
 			dataItem.Display = DefaultFormat(dataItem.FileName, level>0);
 
-			if (File.GetAttributes(path).HasFlag(FileAttributes.Directory))
+			if (Directory.Exists(path) && File.GetAttributes(path).HasFlag(FileAttributes.Directory))
 			{
-				var files = Directory.EnumerateFileSystemEntries(path).Where(x => !x.EndsWith(DefaultDataFile)).ToList().OrderBy(x => x, this);
+				var files = Directory.EnumerateFileSystemEntries(path).Where(x => !x.EndsWith(DefaultDataFile)).ToList();
+
+				if (checkBox1.Checked)
+				{
+					files = files.Select(x => Path.GetFileNameWithoutExtension(x)).Distinct().ToList();
+				}
+
+				files = files.OrderBy(y => y, this).ToList();
 
 				dataItem.Children = files.Select(x => LoadDir(Path.Combine(path, x), level + 1)).ToList();
 			}
@@ -187,6 +191,11 @@ namespace ResourceManager
 				Console.WriteLine(x + " -- " + y);
 			}
 			return x.CompareTo(y);
+		}
+
+		private void TxtDataPath_TextChanged(object sender, EventArgs e)
+		{
+			TxtJsonPath.Text = Path.Combine(TxtDataPath.Text, DefaultDataFile);
 		}
 	}
 }

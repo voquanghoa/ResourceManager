@@ -33,7 +33,6 @@
 			this.BtnSelectDataPath = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
 			this.TxtJsonPath = new System.Windows.Forms.TextBox();
-			this.BtnOpenJsonFile = new System.Windows.Forms.Button();
 			this.DialogOpenFile = new System.Windows.Forms.OpenFileDialog();
 			this.DialogSelectFolder = new System.Windows.Forms.FolderBrowserDialog();
 			this.BtnLoadData = new System.Windows.Forms.Button();
@@ -56,8 +55,9 @@
 			this.TxtDataPath.Location = new System.Drawing.Point(76, 17);
 			this.TxtDataPath.Name = "TxtDataPath";
 			this.TxtDataPath.Size = new System.Drawing.Size(415, 20);
-			this.TxtDataPath.TabIndex = 1;
+			this.TxtDataPath.TabIndex = 0;
 			this.TxtDataPath.Text = "D:\\Project\\VEnglish\\app\\src\\main\\assets";
+			this.TxtDataPath.TextChanged += new System.EventHandler(this.TxtDataPath_TextChanged);
 			// 
 			// BtnSelectDataPath
 			// 
@@ -85,19 +85,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.TxtJsonPath.Location = new System.Drawing.Point(76, 49);
 			this.TxtJsonPath.Name = "TxtJsonPath";
+			this.TxtJsonPath.ReadOnly = true;
 			this.TxtJsonPath.Size = new System.Drawing.Size(415, 20);
 			this.TxtJsonPath.TabIndex = 1;
-			// 
-			// BtnOpenJsonFile
-			// 
-			this.BtnOpenJsonFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.BtnOpenJsonFile.Location = new System.Drawing.Point(503, 46);
-			this.BtnOpenJsonFile.Name = "BtnOpenJsonFile";
-			this.BtnOpenJsonFile.Size = new System.Drawing.Size(75, 23);
-			this.BtnOpenJsonFile.TabIndex = 2;
-			this.BtnOpenJsonFile.Text = "Open";
-			this.BtnOpenJsonFile.UseVisualStyleBackColor = true;
-			this.BtnOpenJsonFile.Click += new System.EventHandler(this.BtnOpenJsonFile_Click);
+			this.TxtJsonPath.TabStop = false;
 			// 
 			// DialogOpenFile
 			// 
@@ -111,7 +102,7 @@
 			this.BtnLoadData.Name = "BtnLoadData";
 			this.BtnLoadData.Size = new System.Drawing.Size(157, 36);
 			this.BtnLoadData.TabIndex = 4;
-			this.BtnLoadData.Text = "Load data";
+			this.BtnLoadData.Text = "Process";
 			this.BtnLoadData.UseVisualStyleBackColor = true;
 			this.BtnLoadData.Click += new System.EventHandler(this.BtnLoadData_Click);
 			// 
@@ -132,7 +123,6 @@
 			this.ClientSize = new System.Drawing.Size(590, 128);
 			this.Controls.Add(this.checkBox1);
 			this.Controls.Add(this.BtnLoadData);
-			this.Controls.Add(this.BtnOpenJsonFile);
 			this.Controls.Add(this.BtnSelectDataPath);
 			this.Controls.Add(this.TxtJsonPath);
 			this.Controls.Add(this.TxtDataPath);
@@ -152,7 +142,6 @@
 		private System.Windows.Forms.Button BtnSelectDataPath;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.TextBox TxtJsonPath;
-		private System.Windows.Forms.Button BtnOpenJsonFile;
 		private System.Windows.Forms.OpenFileDialog DialogOpenFile;
 		private System.Windows.Forms.FolderBrowserDialog DialogSelectFolder;
 		private System.Windows.Forms.Button BtnLoadData;
