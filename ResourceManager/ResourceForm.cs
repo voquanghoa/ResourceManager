@@ -9,14 +9,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using Newtonsoft.Json;
+using CommonShared;
 
 namespace ResourceManager
 {
 	public partial class ResourceForm : Form, IComparer<String>
 	{
-		private const string DefaultDataFile = "data.json";
-		
-		public ResourceForm()
+        private string[] IgnoreFiles = new[]{ ".DS_Store", "data.json" };
+
+        public string DefaultDataFile = "data.json";
+
+        public ResourceForm()
 		{
 			InitializeComponent();
 		}
@@ -84,7 +87,9 @@ namespace ResourceManager
 
 			if (Directory.Exists(path) && File.GetAttributes(path).HasFlag(FileAttributes.Directory))
 			{
-				var files = Directory.EnumerateFileSystemEntries(path).Where(x => !x.EndsWith(DefaultDataFile)).ToList();
+				var files = Directory.EnumerateFileSystemEntries(path)
+                    .Where(x => !IgnoreFiles.Any(y=>x.Contains(y)))
+                    .ToList();
 
 				if (checkBox1.Checked)
 				{
